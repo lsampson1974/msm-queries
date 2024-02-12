@@ -9,4 +9,11 @@ Rails.application.routes.draw do
 
   get("/movies/:film_id", { :controller => "misc", :action => "show_film_details" })
 
+  get("/actors/", { :controller => "misc", :action => "list_all_actors" })
+
+  get("/actors/:actor_id", { :controller => "misc", :action => "show_actor_details" })
+
+
+  
+
 end

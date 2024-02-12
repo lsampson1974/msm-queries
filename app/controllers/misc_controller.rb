@@ -31,13 +31,21 @@ class MiscController < ApplicationController
 
 #--------------------------------------------
 
+def list_all_films
+
+  @film_list = Movie.all
+  
+  render({ :template => "layouts/films"})
+
+end # Of method.
+
+#--------------------------------------------
+
   def show_film_details
 
     @film_num = params[:film_id]
 
     film_details = Movie.where({ :id => @film_num }).first
-
-    #puts "TEST ->> #{film_details.title}"
 
     dir_id = film_details.director_id
 
@@ -67,6 +75,45 @@ class MiscController < ApplicationController
   end
 
 #--------------------------------------------
+
+  def list_all_actors
+
+    @actor_list = Actor.all
+
+    render({ :template => "layouts/actors"})
+
+  end
+
+#--------------------------------------------
+
+def show_actor_details
+
+  @actor_num = params[:actor_id]
+
+  actor_details = Actor.where({ :id => @actor_num }).first
+
+  # Actor info
+
+  @actor_name = actor_details.name
+
+  @actor_dob = actor_details.dob
+
+  @actor_bio = actor_details.bio
+
+  @actor_image = actor_details.image
+
+  @actor_info_created_at = actor_details.created_at
+
+  @actor_info_updated_at = actor_details.updated_at
+
+  # Character info
+
+  @movies_acted_in = Character.where({ :actor_id => @actor_num }).all
+
+
+  render({ :template => "layouts/actor_info"})
+
+end
 
 
 end # Of class
