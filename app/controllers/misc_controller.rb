@@ -86,34 +86,68 @@ end # Of method.
 
 #--------------------------------------------
 
-def show_actor_details
+  def show_actor_details
 
-  @actor_num = params[:actor_id]
+    @actor_num = params[:actor_id]
 
-  actor_details = Actor.where({ :id => @actor_num }).first
+    actor_details = Actor.where({ :id => @actor_num }).first
 
-  # Actor info
+    # Actor info
 
-  @actor_name = actor_details.name
+    @actor_name = actor_details.name
 
-  @actor_dob = actor_details.dob
+    @actor_dob = actor_details.dob
 
-  @actor_bio = actor_details.bio
+    @actor_bio = actor_details.bio
 
-  @actor_image = actor_details.image
+    @actor_image = actor_details.image
 
-  @actor_info_created_at = actor_details.created_at
+    @actor_info_created_at = actor_details.created_at
 
-  @actor_info_updated_at = actor_details.updated_at
+    @actor_info_updated_at = actor_details.updated_at
 
-  # Character info
+    # Character info
 
-  @movies_acted_in = Character.where({ :actor_id => @actor_num }).all
+    @movies_acted_in = Character.where({ :actor_id => @actor_num }).all
 
 
-  render({ :template => "layouts/actor_info"})
+    render({ :template => "layouts/actor_info"})
 
-end
+  end # Of method.
+
+#--------------------------------------------
+
+  def show_youngest_director
+
+    youngest_director = Director.where.not({ :dob => nil }).all.order(:dob => :asc).last
+
+    @director_name = youngest_director.name
+
+    @director_id = youngest_director.id
+
+    @dob_string = youngest_director.dob.strftime('%B %d, %Y')
+
+    render({ :template => "layouts/youngest"})    
+
+  end # Of method.
+
+#--------------------------------------------
+
+  def show_eldest_director
+
+    eldest_director = Director.where.not({ :dob => nil }).all.order(:dob => :asc).first
+
+    @director_name = eldest_director.name
+
+    @director_id = eldest_director.id
+
+    @dob_string = eldest_director.dob.strftime('%B %d, %Y')
+
+    render({ :template => "layouts/eldest"})    
+
+  end # Of method.
+
+#--------------------------------------------
 
 
 end # Of class
